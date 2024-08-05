@@ -1,0 +1,13 @@
+
+{
+    "trigger": "?",
+    "warning":{
+        "deadline": 10,
+        "channel": 734886532090953746
+    },
+    "table": {
+        "refresh": 24,
+        "path": "qualis_table.csv",
+        "keys_path": "keywords.txt"
+    }
+}
