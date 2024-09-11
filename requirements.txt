@@ -6,8 +6,10 @@ geodatasets==2023.12.0
 geopandas==0.14.4
 discord.py
 jellyfish
+lxml
 beautifulsoup4
 table2ascii
 pandas
 numpy
 ontodev-cogs
+lxml
