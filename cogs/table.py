@@ -128,6 +128,14 @@ class TableCog(commands.Cog):
         self.__savek()
 
     @commands.command()
+    async def warning(self, ctx):
+        last_events = self.table[['sail', 'location', 'deadline', 'qualis', 'similarity']].loc[self.table['deadline'] <= self.date+timedelta(days=self.deadline_threshold)]
+        channel = self.bot.get_channel(self.warning_channel)
+        await channel.send(f"# 🚨🚨 WARNING UPCOMING DEADLINE 🚨🚨")
+        pagination = PaginationView(last_events)
+        await pagination.send(channel)
+
+    @commands.command()
     async def update(self, ctx):
         await ctx.send("# 🔄 Updating table keys... 🔄")
         self.__update_table()
