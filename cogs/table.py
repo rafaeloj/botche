@@ -109,8 +109,8 @@ class TableCog(commands.Cog):
                 await channel.send(f"# 🚨🚨 WARNING UPCOMING DEADLINE 🚨🚨")
                 pagination = PaginationView(last_events)
                 await pagination.send(channel)
-            except:
-                print("deu ruim")
+            except Exception as e:
+                print(f"deu ruim {e}")
                 # log(INFO, f"CHANNEL id={self.warning_channel} NOT FOUND!!")
             return
         log(INFO, f"NO UPCOMING DEADLINE")
