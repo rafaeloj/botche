@@ -18,7 +18,11 @@ class Botche(commands.Cog):
 
     @commands.command()
     async def info(self, ctx):
-        print(ctx.channel.id)
+        print(f"CHANNEL ID: {ctx.channel.id}")
+        c = self.bot.get_channel(ctx.channel.id)
+        print(f"CHANNEL: {c}")
+        print(dir(c))
+
         await ctx.send("Remember, to find the conference's qualis it used https://ppgcc.github.io/discentesPPGCC/ and  http://www.wikicfp.com/cfp/ through a levenshtein distance. So how bigger is similarity mean that qualis is probabilly wrong WikiCFP")
 
 

@@ -18,7 +18,7 @@ class TableCog(commands.Cog):
         self.warning_channel    = warning_channel
         self.deadline_threshold = deadline_threshold
         self.__read_table()
-        self.__refresh_table.start()
+        # self.__refresh_table.start()
         self.__warning.start()
     
     def cog_unload(self):
@@ -99,11 +99,13 @@ class TableCog(commands.Cog):
         log(INFO, "Refresh table")
         self.__update_table()
 
+    # @tasks.loop(minutes=1)
     @tasks.loop(hours=(24*7))
     async def __warning(self):
         last_events = self.table[['sail', 'location', 'deadline', 'qualis', 'similarity']].loc[self.table['deadline'] <= self.date+timedelta(days=self.deadline_threshold)]
         if last_events.shape[0] > 0:
             try:
+                print(self.bot.get_channel(self.warning_channel))
                 log(INFO, f"Warning Message send to {self.warning_channel}")
                 channel = self.bot.get_channel(self.warning_channel)
                 await channel.send(f"# 🚨🚨 WARNING UPCOMING DEADLINE 🚨🚨")
