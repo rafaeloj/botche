@@ -18,7 +18,7 @@ class TableCog(commands.Cog):
         self.warning_channel    = warning_channel
         self.deadline_threshold = deadline_threshold
         self.__read_table()
-        # self.__refresh_table.start()
+        self.__refresh_table.start()
         self.__warning.start()
     
     def cog_unload(self):
