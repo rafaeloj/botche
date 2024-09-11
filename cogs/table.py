@@ -65,7 +65,7 @@ class TableCog(commands.Cog):
     @commands.command(
         name="rmk",
         help="Remove keywords from list.",
-        brief="Example: !rmk key_a,key_b,key_c"
+        brief="Example: ?rmk key_a,key_b,key_c"
     )
     async def rmk(self, ctx, str_keys = None):
         # log(INFO, "Remove key")
@@ -82,7 +82,7 @@ class TableCog(commands.Cog):
     @commands.command(
         name="addk",
         help="Add new keywords to keywords list.",
-        brief="Example: !addk key_a,key_b,key_c"
+        brief="Example: ?addk key_a,key_b,key_c"
     )
     async def addk(self, ctx, str_keys = None):
         # log(INFO, "Add new key")
@@ -115,6 +115,7 @@ class TableCog(commands.Cog):
             return
         log(INFO, f"NO UPCOMING DEADLINE")
         print("NO UPCOMING DEADLINE")
+
     def __addk(self, key_list: str):
         # log(INFO, "Add new keywords on file")
         # Get current keys
