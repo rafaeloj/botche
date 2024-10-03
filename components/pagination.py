@@ -28,16 +28,22 @@ class PaginationView(discord.ui.View):
 
     def create_message(self, data):
         data['deadline'] = data['deadline'].astype(str)
+
         data = data.rename(columns={k: k.upper() for k in data.columns})
+        data.reset_index(inplace=True)
+        data.rename(columns={'index': 'ID'}, inplace=True)
         ascii_table = t2a(
             header=data.columns.tolist(),
             body=data.values.tolist(),
             style=PresetStyle.double_thin_compact
         )
+        
         return f"""
-            ## Conference Table
-            ### Total Pages: {self.total_pages}\t Current Page {self.current_page}
-            ```{ascii_table}```
+        ## 📅 Conference Table
+        ### 📄 Total Pages: {self.total_pages} \t\t|\t\t 📄 Current Page: {self.current_page}
+        ```{ascii_table}```
+        \n\* significa que provavelmente o qualis não está correto! 🚩
+        \n?more id Para coletar mais informações sobre a conferência 🚩
         """
 
     def update_table_info(self):

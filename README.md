@@ -52,6 +52,6 @@ Ensure bot.py is the main entry script containing your main function.
 - Keyword filter
 - Table indexing
 - More command (index)
-- Update table
-- Warning for similarity > 10
+<!-- - Update table -->
+<!-- - Warning for similarity > 10 -->
 - Add A4 to filter

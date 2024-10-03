@@ -38,7 +38,7 @@ def treat_rows(rows):
     for pear in pear_rows:
         sail, full_name = get_sail_and_full_name(pear[0])
         when, location, deadline = get_when_location_deadline(pear[1])
-        link = get_link(pear[0])
+        keywords, link = get_link_and_keywords(pear[0])
         events.append({
             'sail': sail,
             'full_name': full_name,
@@ -46,6 +46,7 @@ def treat_rows(rows):
             'location': location,
             'deadline': deadline,
             'link': link,
+            'keywords': keywords,
         })
     return events
 
@@ -82,13 +83,21 @@ def get_raw_qualis_data():
         })
     return data
 
-def get_link(pear):
+def get_link_and_keywords(pear):
     link = pear.find_all('a', href=True)[0]['href']
     print(f'http://www.wikicfp.com{link}')
     source = urllib.request.urlopen(f'http://www.wikicfp.com{link}').read()
     soup = bs.BeautifulSoup(source,'lxml')
     a = soup.find_all('a', target='_newtab')[0]
-    return a['href']
+    categories_table = soup.find_all('table', class_='gglu')[1]
+    categories = [a.text for a in categories_table.find_all('a', href=True)]
+    try:
+        categories.pop(0)
+    except:
+        pass
+    keywords = ', '.join(categories)
+    
+    return keywords, a['href']
 
 def get_qualis_data(conferences):
     conferences_with_qualis = []

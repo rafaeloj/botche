@@ -1,4 +1,5 @@
 from discord.ext import commands, tasks
+import discord
 import pandas as pd
 import numpy as np
 from components.pagination import PaginationView
@@ -27,6 +28,33 @@ class TableCog(commands.Cog):
 
     async def on_ready(self):
         print(f"Logged in as {self.usef} (ID: {self.user.id}) - TableCog")
+
+    @commands.command(
+        name="more",
+        help="Show more information about a specific event.",
+        brief="Example: ?more 1",
+    )
+    async def more(self, ctx, event_id):
+        try:
+            event_id = int(event_id)
+            event = self.table.loc[event_id]
+            embed = discord.Embed(
+                title=f"📅 Event Details: {event['full_name']}",
+                color=discord.Color.blue()
+            )
+            embed.add_field(name="⛵ Sail", value=event['sail'], inline=True)
+            embed.add_field(name="📍 Location", value=event['location'], inline=True)
+            embed.add_field(name="🗓️ Deadline", value=event['deadline'], inline=True)
+            embed.add_field(name="🔗 Link", value=f"[{event['sail']} page]({event['link']})", inline=True)
+            embed.add_field(name="🏅 Qualis", value=event['qualis'], inline=True)
+            embed.add_field(name="🔍 Similarity", value=event['similarity'], inline=True)
+            embed.add_field(name="🕒 When Start", value=event['when_start'], inline=True)
+            embed.add_field(name="🕒 When End", value=event['when_end'], inline=True)
+            embed.add_field(name="🔑 Keywords", value=event['keywords'], inline=True)
+            await ctx.send(embed=embed)
+        except Exception as e:
+            await ctx.send(f"Event with id {event_id} not found.")
+            print(e)
 
     @commands.command(
         name="show",
@@ -148,6 +176,7 @@ class TableCog(commands.Cog):
         self.table = pd.read_csv(self.table_path)
         self.table['deadline'] = pd.to_datetime(self.table['deadline'], errors='coerce')
         self.table = self.table.loc[self.table['deadline'] >= self.date]
+        self.table['similarity'] = self.table['similarity'].apply(lambda x: f"{x}*" if int(x) > 10 else x)
 
     def __read_keywords(self):
         # log(INFO, "Read keywords")
