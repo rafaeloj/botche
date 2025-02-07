@@ -1,9 +1,8 @@
-
 {
     "trigger": "?",
     "warning":{
         "deadline": 10,
-        "channel": 1178770314486886503
+        "channel": 1270077862287904848
     },
     "table": {
         "refresh": 24,

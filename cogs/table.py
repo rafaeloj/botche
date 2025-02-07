@@ -68,7 +68,7 @@ class TableCog(commands.Cog):
     @commands.command(
         name="setdt",
         help="Defines the deadline threshold. (Days)",
-        brief="Example: !setdt 15"
+        brief="Example: ?setdt 15"
     )
     async def setdt(self, ctx, deadline_threshold):
         if deadline_threshold:
